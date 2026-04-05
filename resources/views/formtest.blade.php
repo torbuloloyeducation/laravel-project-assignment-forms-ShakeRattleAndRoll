@@ -17,9 +17,35 @@
           </div>
           <div class="mt-3 p-5">
             <h2 class="text-lg font-semibold text-white">Emails</h2>
+          </div>
+          {{-- error message --}}
+          <div>
+            @if (session()->has('error-message'))
+            <div class="text-red-600">
+              {{session('error-message')}}
+            </div>
+            @endif
+          </div>
+          {{-- success message --}}
+          <div>  
+            @if (session()->has('message'))
+            <div class="text-green-600">
+              {{session('message')}}
+            </div>
+            @endif
+          </div>
+
         <ul>
-            @foreach ($emails as $email)
-                <li class="text-sm p-1">{{ $email }}</li>
+            @foreach ($emails as $index => $email)
+                <li class="text-sm p-1 ">{{ $email }}</li>
+                
+                {{-- the delete button --}}
+                <form method="POST" action="/delete-email"> 
+                  @csrf 
+                  <input type="hidden" name="index" value="{{$index}}">
+                  <button type="submit" class="bg-red-600 px-3">delete</button>
+                </form>
+            
             @endforeach
           </div>
         </div>
